@@ -1,6 +1,7 @@
 package phoneList;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /*
  * Phone List
@@ -29,12 +30,17 @@ public class PhoneList {
 	/*
 	 * Instance Variables
 	 */
-	
-	
+	private ArrayList<Contact> list;
+	//the phone number is a string since we wont be needing to edit it like an int/double
+	private String name, phone;
+	private Contact contact;
 	
 	//Constructor
 	public PhoneList() {
 		//initialize instance variables
+		list = new ArrayList<Contact>();
+		phone = "";
+		name = "";
 	}
 	
 	
@@ -50,8 +56,23 @@ public class PhoneList {
 	 *        it's been added
 	 */
 	public void addContact() {
-		
-		
+		name = getString("What is the name of the new contact?");
+		phone = getString("What is the phone number of the new contact?");
+		// making a new contact object, the variable name doesn't have to be unique since its data is
+		contact = new Contact(name, phone); 
+		int j = 1, i = 0;
+		if (list.size() == 0) {
+			list.add(contact);
+		}
+		else {
+			for (i = 0; i <= list.size() && j != -1 && j != 0; i++) { //run until either list ends or j is 0 or -1
+				 //compareTo gives result of +1, -1, or 0 based off its alphabetical order
+				j = name.compareToIgnoreCase((list.get(i)).getName());
+			}
+			if (j == -1 || j == 0 || i == list.size()) {
+				list.add(i,contact);
+			}
+		}
 	}
 	
 	
@@ -71,8 +92,17 @@ public class PhoneList {
 	 *        
 	 */
 	public void removeContact() {
-		
-		
+		name = getString("What is the name of the contact you wish to remove? (CAPS Sensitive)");
+		int j = 1, i = 0;
+		for (i = 0; i <= list.size() && j != 0; i++) {
+			j = name.compareTo((list.get(i)).getName());
+		}
+		if (j == 0) {
+			list.remove(i);
+		}
+		else if (j == 1 || j == -1) {
+			System.out.println("ERROR 404 - We could not find the contact you were looking for.");
+		}
 	}
 	
 	
@@ -88,7 +118,13 @@ public class PhoneList {
 	 *          #################
 	 */
 	public void printList() {
-		
+		int i = 0, j = 0;
+		System.out.println("-LIST OF CONTACTS-"+"\nContacts - "+list.size()+"\n-----------------");
+		for (i = 0; i <= list.size(); i++) {
+			System.out.println((list.get(i)).getName()+" - "+(list.get(i)).getPhone());
+			System.out.println("-------");
+		}
+		System.out.println("-END OF CONTACT LIST-");	
 	}
 
 	
@@ -158,7 +194,8 @@ public class PhoneList {
 		
 		Scanner inKey = new Scanner(System.in);
 		System.out.print(str);  //notice it's NOT a print line.  This way input is next to question.
-		return inKey.nextLine();
+		String b = inKey.nextLine();
+		return b;
 		
 	}
 	

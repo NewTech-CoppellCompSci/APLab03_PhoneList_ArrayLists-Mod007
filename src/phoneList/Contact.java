@@ -20,5 +20,33 @@ package phoneList;
 
 
 public class Contact {
-
+	
+	private String name;
+	private String phonenumber;
+	
+	public Contact(String newname, String newphone) {
+		name = newname;
+		phonenumber = newphone;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getPhone() {
+		return phonenumber;
+	}
+	
+	public void setName(String newname) {
+		name = newname;
+	}
+	
+	public void setPhone(String newphone) {
+		phonenumber = newphone;
+	}
+	
+	@Override
+	public String toString() {
+		return "Name: "+name+"\nPhone Number: "+phonenumber;
+	}
 }
