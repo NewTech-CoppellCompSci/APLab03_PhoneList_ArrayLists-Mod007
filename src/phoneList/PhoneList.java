@@ -56,8 +56,12 @@ public class PhoneList {
 	 *        it's been added
 	 */
 	public void addContact() {
-		name = getString("What is the name of the new contact?");
-		phone = getString("What is the phone number of the new contact?");
+		//get string wasn't working and was causing glitches and crashes so I had to manually scan
+		Scanner inKey = new Scanner(System.in);
+		System.out.println("What is the name of the new contact?");
+		name = inKey.nextLine();
+		System.out.println("What is the phone number of the new contact?");
+		phone = inKey.nextLine();
 		// making a new contact object, the variable name doesn't have to be unique since its data is
 		contact = new Contact(name, phone); 
 		int j = 1, i = 0;
@@ -94,7 +98,7 @@ public class PhoneList {
 	public void removeContact() {
 		name = getString("What is the name of the contact you wish to remove? (CAPS Sensitive)");
 		int j = 1, i = 0;
-		for (i = 0; i <= list.size() && j != 0; i++) {
+		for (i = 0; i < list.size() && j != 0; i++) {
 			j = name.compareTo((list.get(i)).getName());
 		}
 		if (j == 0) {
@@ -118,13 +122,18 @@ public class PhoneList {
 	 *          #################
 	 */
 	public void printList() {
-		int i = 0, j = 0;
-		System.out.println("-LIST OF CONTACTS-"+"\nContacts - "+list.size()+"\n-----------------");
-		for (i = 0; i <= list.size(); i++) {
-			System.out.println((list.get(i)).getName()+" - "+(list.get(i)).getPhone());
-			System.out.println("-------");
+		if (list.size() > 0) {
+			int i = 0, j = 0;
+			System.out.println("\n-LIST OF CONTACTS-"+"\nContacts - "+list.size()+"\n-----------------");
+			for (i = 0; i < list.size(); i++) {
+				System.out.println((list.get(i)).getName()+" - "+(list.get(i)).getPhone());
+				System.out.println("-------");
+			}
+			System.out.println("-END OF CONTACT LIST-");	
 		}
-		System.out.println("-END OF CONTACT LIST-");	
+		else {
+			System.out.println("There are no contacts to list (Suggestion: Add a contact by entering 1).");
+		}
 	}
 
 	
